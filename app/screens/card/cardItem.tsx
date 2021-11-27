@@ -3,6 +3,7 @@ import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {setSelectedCard} from '../../modules/card/action';
 // interface
 interface ICardItem {
   item: object;
@@ -16,6 +17,7 @@ const CardItem = ({item, ITEM_HEIGHT}: ICardItem) => {
     <Pressable
       style={[styles.card, {height: ITEM_HEIGHT}]}
       onPress={() => {
+        dispatch(setSelectedCard({card: item}));
         navigation.navigate('cardDetail');
       }}>
       <Text>{item.name}</Text>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 // Modules
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 // Redux
@@ -13,7 +13,7 @@ import Header from '../../components/Header';
 // Constants
 const ITEM_HEIGHT = 40;
 // CardList
-const CardList = ({navigation}) => {
+const CardList = () => {
   const dispatch = useDispatch();
   // Redux State
   const _allCards = useSelector(
@@ -68,5 +68,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'gray',
   },
-  container: {padding: 25, justifyContent: 'center', backgroundColor: 'white'},
+  container: {
+    flex: 1,
+    padding: 25,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
 });

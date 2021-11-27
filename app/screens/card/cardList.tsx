@@ -5,11 +5,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 // Redux
 import {CardState} from '../../modules/card/reducer';
-import {getAllCardsApiRequest} from '../../modules/card/actionCreators';
+import {
+  cardsSearchApiRequest,
+  getAllCardsApiRequest,
+} from '../../modules/card/actionCreators';
 // Components
-import {ActivityIndicator} from '../../components';
+import {ActivityIndicator, Header, SearchBar} from '../../components';
 import CardItem from './cardItem';
-import Header from '../../components/Header';
 // Constants
 const ITEM_HEIGHT = 40;
 // CardList
@@ -21,23 +23,48 @@ const CardList = () => {
   );
   // State
   const [allCards, setAllCards] = useState<Array<object>>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState<string>('');
 
-  useEffect(() => {
+  const getData = () => {
+    setLoading(true);
     dispatch(getAllCardsApiRequest()).then(() => {
-      let common = [];
+      let common: Array<object> = [];
       Object.keys(_allCards).map(key => {
         common = [...common, ..._allCards[key]];
       });
       setLoading(false);
       setAllCards(common);
+      console.log(common.length);
     });
+  };
+
+  const searchData = () => {
+    if (searchText !== '') {
+      setLoading(true);
+      dispatch(cardsSearchApiRequest({name: searchText})).then(() => {
+        setLoading(false);
+        setAllCards(_allCards);
+      });
+    } else {
+      getData();
+    }
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
     <SafeAreaView style={styles.safearea}>
       <Header label="Cards" />
       <View style={styles.container}>
+        <SearchBar
+          onChangeText={setSearchText}
+          onSearch={searchData}
+          value={searchText}
+          placeholder="Search a card..."
+        />
         {!loading ? (
           <FlatList
             data={allCards}
@@ -46,6 +73,8 @@ const CardList = () => {
             )}
             initialNumToRender={15}
             showsVerticalScrollIndicator={false}
+            refreshing={loading}
+            onRefresh={getData}
             keyExtractor={item => item.cardId}
             getItemLayout={(data, index) => ({
               length: ITEM_HEIGHT,
@@ -71,7 +100,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
-    justifyContent: 'center',
     backgroundColor: 'white',
   },
 });

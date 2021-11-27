@@ -49,7 +49,7 @@ const CardDetail = () => {
                   {lineHeight: 30},
                 ]}>{`${data.label}:   `}</Text>
               {selectedCard.mechanics?.map(value => (
-                <Text>{value.name}</Text>
+                <Text key={value.name}>{value.name}</Text>
               ))}
             </>
           ),

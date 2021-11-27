@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 
 const ActivityIndicator = () => {
-  return <RNActivityIndicator size="large" color="#00ff00" />;
+  return <RNActivityIndicator size="large" color="gray" />;
 };
 
 export default ActivityIndicator;

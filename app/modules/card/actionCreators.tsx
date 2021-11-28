@@ -2,7 +2,7 @@ import {axiosClient} from '../axios';
 import {setAllCards} from './action';
 
 export function getAllCardsApiRequest() {
-  return async dispatch => {
+  return async (dispatch: any) => {
     await axiosClient
       .get('cards')
       .then(response => {
@@ -13,9 +13,7 @@ export function getAllCardsApiRequest() {
 }
 
 export function cardsSearchApiRequest({name = ''}: {name: string}) {
-  console.log(name);
-
-  return async dispatch => {
+  return async (dispatch: any) => {
     await axiosClient
       .get(`cards/search/${name}`)
       .then(response => {

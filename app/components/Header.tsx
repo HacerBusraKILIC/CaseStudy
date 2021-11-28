@@ -10,8 +10,6 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-// Theme
-import {Dimension} from '../theme/Variables';
 // Interface
 interface HeaderProps {
   label?: string;
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     height: 50,
-    width: Dimension.width,
+    width: '100%',
     alignItems: 'center',
   },
   headerTitleStyle: {

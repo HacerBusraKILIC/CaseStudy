@@ -37,7 +37,7 @@ const CardDetail = () => {
         )}
         {detailData.map(data =>
           data.key !== 'mechanics' ? (
-            <Text style={styles.row}>
+            <Text key={data.key} style={styles.row}>
               <Text style={styles.label}>{`${data.label}:   `}</Text>
               <Text>{selectedCard[data.key]}</Text>
             </Text>

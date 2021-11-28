@@ -13,6 +13,7 @@ interface ISearchBar {
   value: string;
   onChangeText: Dispatch<SetStateAction<string>>;
   onSearch: () => void;
+  onClear?: () => void;
   placeholder?: string;
   containerStyle?: ViewStyle;
 }
@@ -22,6 +23,7 @@ const SearchBar = ({
   value,
   onChangeText,
   onSearch,
+  onClear,
   placeholder,
   containerStyle,
 }: ISearchBar) => {
@@ -33,6 +35,9 @@ const SearchBar = ({
         value={value}
         placeholder={placeholder}
       />
+      <TouchableOpacity style={styles.clearButton} onPress={onClear}>
+        <Text style={styles.clear}>X</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.textButton} onPress={onSearch}>
         <Text style={styles.text}>Search</Text>
       </TouchableOpacity>
@@ -63,9 +68,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     color: 'white',
   },
+  clear: {color: 'gray'},
   textButton: {
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     backgroundColor: 'gray',
   },
+  clearButton: {paddingRight: 5},
 });

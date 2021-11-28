@@ -29,13 +29,7 @@ const CardList = () => {
   const getData = () => {
     setLoading(true);
     dispatch(getAllCardsApiRequest()).then(() => {
-      let common: Array<object> = [];
-      Object.keys(_allCards).map(key => {
-        common = [...common, ..._allCards[key]];
-      });
       setLoading(false);
-      setAllCards(common);
-      console.log(common.length);
     });
   };
 
@@ -44,16 +38,32 @@ const CardList = () => {
       setLoading(true);
       dispatch(cardsSearchApiRequest({name: searchText})).then(() => {
         setLoading(false);
-        setAllCards(_allCards);
       });
-    } else {
-      getData();
     }
+  };
+
+  const onClear = () => {
+    setSearchText('');
+    getData();
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (_allCards.length !== 0) {
+      if (searchText === '') {
+        let common: Array<object> = [];
+        Object.keys(_allCards).map(key => {
+          common = [...common, ..._allCards[key]];
+        });
+        setAllCards(common);
+      } else {
+        setAllCards(_allCards);
+      }
+    }
+  }, [_allCards]);
 
   return (
     <SafeAreaView style={styles.safearea}>
@@ -62,10 +72,13 @@ const CardList = () => {
         <SearchBar
           onChangeText={setSearchText}
           onSearch={searchData}
+          onClear={onClear}
           value={searchText}
           placeholder="Search a card..."
         />
-        {!loading ? (
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
           <FlatList
             data={allCards}
             renderItem={({item}) => (
@@ -82,8 +95,6 @@ const CardList = () => {
               index,
             })}
           />
-        ) : (
-          <ActivityIndicator />
         )}
       </View>
     </SafeAreaView>

@@ -12,12 +12,6 @@ import {
 } from 'react-native-safe-area-context';
 // Screens
 import {CardStackNavigator} from '../screens/card';
-// Theme
-import AppStyles from '../theme/Layout';
-import {Colors} from '../theme/Variables';
-// // Redux
-// import {UserState} from '../modules/user/reducers';
-// import {logout} from '../modules/user/actions';
 
 export type NavigatorParamList = {
   card: undefined;
@@ -41,14 +35,9 @@ export const AppNavigator = React.forwardRef<
   Partial<React.ComponentProps<typeof NavigationContainer>>
 >((props, ref) => {
   return (
-    <SafeAreaProvider
-      style={AppStyles.fill}
-      initialMetrics={initialWindowMetrics}>
+    <SafeAreaProvider style={{flex: 1}} initialMetrics={initialWindowMetrics}>
       <NavigationContainer {...props} ref={ref}>
-        <StatusBar
-          barStyle={'dark-content'}
-          backgroundColor={Colors.gray_extra_light}
-        />
+        <StatusBar barStyle={'dark-content'} backgroundColor="lightgray" />
         <AppStack />
       </NavigationContainer>
     </SafeAreaProvider>
